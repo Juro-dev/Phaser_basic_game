@@ -6,6 +6,10 @@ export default {
   width: 1200,
   height: 800,
   backgroundColor: '#b9eaff',
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
   physics: {
     default: 'arcade',
     arcade: {
