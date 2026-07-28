@@ -4,12 +4,13 @@ A small browser arcade game built with [Phaser](https://phaser.io/). Move your b
 
 ## How to play
 
-| Key | Action |
+| Control | Action |
 | --- | --- |
-| **← / →** | Move the blaster |
-| **Space** | Shoot / start game / restart after game over |
+| **← / →** or **swipe left/right** | Move the blaster |
+| **Space** or **tap** | Shoot |
+| **Space** or **tap** | Start game / restart after game over |
 
-Hit bananas with your laser to score. When the game ends, your final score is shown — press **Space** to play again.
+Hit bananas with your laser to score. When the game ends, your final score is shown — press **Space** or **tap** to play again.
 
 ## Run it
 

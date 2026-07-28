@@ -53,8 +53,43 @@ export default class GameScene extends Phaser.Scene {
     this.platform.body.immovable = true;
 
 
-    // Cursors
+    // Cursors + touch (swipe left/right, tap to shoot)
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.swipeDir = 0;
+    this.didSwipe = false;
+    this.pointerDownX = 0;
+    this.pointerDownY = 0;
+    this.swipeThreshold = 20;
+    this.tapMaxDist = 15;
+
+    this.input.on('pointerdown', (pointer) => {
+      this.pointerDownX = pointer.x;
+      this.pointerDownY = pointer.y;
+      this.swipeDir = 0;
+      this.didSwipe = false;
+    });
+
+    this.input.on('pointermove', (pointer) => {
+      if (!pointer.isDown) {
+        return;
+      }
+      const dx = pointer.x - this.pointerDownX;
+      if (Math.abs(dx) > this.swipeThreshold) {
+        this.didSwipe = true;
+        this.swipeDir = dx > 0 ? 1 : -1;
+      } else {
+        this.swipeDir = 0;
+      }
+    });
+
+    this.input.on('pointerup', (pointer) => {
+      const dx = Math.abs(pointer.x - this.pointerDownX);
+      const dy = Math.abs(pointer.y - this.pointerDownY);
+      if (!this.didSwipe && dx < this.tapMaxDist && dy < this.tapMaxDist && this.alive === 0) {
+        this.shoot();
+      }
+      this.swipeDir = 0;
+    });
 
     //  Bullets
     this.bullets = this.physics.add.group({
@@ -183,16 +218,18 @@ export default class GameScene extends Phaser.Scene {
     // this.timeText.setText('Time: ' + time + ' seconds');
     this.hitText.setText('Hits: ' + this.hit);
 
-    if (this.cursors.right.isDown) {
-        this.player.x += 15;
-    }
+    if (this.alive === 0 && this.player && this.player.active) {
+      if (this.cursors.right.isDown || this.swipeDir === 1) {
+          this.player.x += 15;
+      }
 
-    if (this.cursors.left.isDown) {
-        this.player.x -= 15;
-    }
+      if (this.cursors.left.isDown || this.swipeDir === -1) {
+          this.player.x -= 15;
+      }
 
-    if (this.cursors.space.isDown && this.alive === 0) {
-        this.shoot();
+      if (this.cursors.space.isDown) {
+          this.shoot();
+      }
     }
 
 

@@ -22,19 +22,19 @@ export default class TitleScene extends Phaser.Scene {
 		color: '#F8C949',
 		fontFamily: 'Comic Sans MS, cursive, sans-serif',
 	});
-	this.instrText1 = this.add.text(0, 0, 'Control phaser with LEFT and RIGHT keys.', {
+	this.instrText1 = this.add.text(0, 0, 'Move with LEFT/RIGHT keys or swipe left/right.', {
 		fontSize: '30px',
-		color: '#fff',
+		color: '#000',
 		fontFamily: 'Lucida Console, Monaco, monospace',
 	});
-	this.instrText2 = this.add.text(0, 0, 'Press SPACE to shoot.', {
+	this.instrText2 = this.add.text(0, 0, 'Shoot with SPACE or tap the screen.', {
 		fontSize: '30px',
-		color: '#fff',
+		color: '#000',
 		fontFamily: 'Lucida Console, Monaco, monospace',
 	});
-	this.instrText3 = this.add.text(0, 0, 'When ready, press SPACE to play!', {
+	this.instrText3 = this.add.text(0, 0, 'When ready, press SPACE or tap to play!', {
 		fontSize: '30px',
-		color: '#fff',
+		color: '#000',
 		fontFamily: 'Lucida Console, Monaco, monospace',
 	});
 
@@ -71,8 +71,11 @@ export default class TitleScene extends Phaser.Scene {
 	this.instrText2.setY(450);
 	this.instrText3.setY(500);
 
-	// Cursors
+	// Cursors + tap to start
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.input.once('pointerup', () => {
+      this.scene.start('Game');
+    });
 
   }
 
